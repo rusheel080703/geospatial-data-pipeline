@@ -1,6 +1,6 @@
 
 
-# 🗺️ HW3: Spatial Data Creation, Processing, and Visualization
+# 🗺️Spatial Data Creation, Processing, and Visualization
 
 **An end-to-end project utilizing manual data collection, PostGIS spatial analysis, and AI code generation (Dyad/Google AI Studio) to process and visualize real-world geo-coordinates.**
 
