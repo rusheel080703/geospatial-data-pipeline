@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OL - HW3 (Full Screen)</title>
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
+    <script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
+
+    <style>
+        /* Resets browser defaults and makes map fill window */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Hides scrollbars */
+        }
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script>
+        // --- START OF HOMEWORK CODE ---
+
+        // 1. Define all 18 of your locations
+        const myLocations = [
+            { name: 'My Home', coords: [-118.29036297018881, 34.02702181975841] },
+            { name: 'Leavey Library', coords: [-118.28303081842726, 34.02153309333901] },
+            { name: 'Doheny Library', coords: [-118.28415037766956, 34.02037610311187] },
+            { name: 'Hoose Library', coords: [-118.28648403988029, 34.01862473274226] },
+            { name: 'RTCC Cafe', coords: [-118.28631152888664, 34.020222664905454] },
+            { name: 'EVK', coords: [-118.28220510101738, 34.02125547141978] },
+            { name: 'Fertitta Cafe', coords: [-118.282298223626, 34.01893001215148] },
+            { name: 'Gen. Fountain', coords: [-118.28324727244882, 34.02219592908872] },
+            { name: 'Doheny Fountatin', coords: [-118.28446687377786, 34.02052962767855] },
+            { name: 'PNF Shumway', coords: [-118.28526674152653, 34.020222664905454] },
+            { name: 'Fubon Fountain', coords: [-118.28503409869414, 34.02523104748001] },
+            { name: 'Marshall Fountain', coords: [-118.2850333084606, 34.019087507543276] },
+            { name: 'SAL', coords: [-118.28924344811942, 34.01947731108682] },
+            { name: 'USC Viterbi', coords: [-118.28806356068792, 34.0200484306049] },
+            { name: 'TTH', coords: [-118.28406684402886, 34.02238227716023] },
+            { name: 'USC Law', coords: [-118.28417482327542, 34.01884785174663] },
+            { name: 'USC Architecture', coords: [-118.28771237025748, 34.01928644715761] },
+            { name: 'Marshall', coords: [-118.2855286653286, 34.018599348625884] }
+        ];
+
+        // 2. Store, Retrieve, and Parse
+        localStorage.setItem('hw3_locations', JSON.stringify(myLocations));
+        const storedData = localStorage.getItem('hw3_locations');
+        const locations = JSON.parse(storedData);
+
+        // 3. Create Features
+        const features = [];
+        for (const loc of locations) {
+            const mapCoords = ol.proj.fromLonLat(loc.coords); 
+            features.push(
+                new ol.Feature({
+                    geometry: new ol.geom.Point(mapCoords),
+                    name: loc.name // We will read this name for the label
+                })
+            );
+        }
+
+        // 4. Create vector source
+        const vectorSource = new ol.source.Vector({
+            features: features
+        });
+
+        // 5. Define the style function
+        const pointStyle = function(feature) {
+            return new ol.style.Style({
+                // The main map pin icon
+                image: new ol.style.Icon({
+                    anchor: [0.5, 46], // Anchor at the bottom-center of the icon
+                    anchorXUnits: 'fraction',
+                    anchorYUnits: 'pixels',
+                    src: 'https://openlayers.org/en/v4.6.5/examples/data/icon.png' // A standard pin icon
+                }),
+                // The text label
+                text: new ol.style.Text({
+                    text: feature.get('name'), // Get the name from the feature
+                    font: 'bold 12px sans-serif',
+                    offsetY: 10, // Place the text 10px below the icon
+                    fill: new ol.style.Fill({
+                        color: '#000000' // Black text
+                    }),
+                    stroke: new ol.style.Stroke({
+                        color: '#FFFFFF', // White outline for readability
+                        width: 3
+                    })
+                })
+            });
+        };
+
+        // 6. Create the vector layer
+        const vectorLayer = new ol.layer.Vector({
+            source: vectorSource,
+            style: pointStyle // Use the style function
+        });
+
+        // 7. Create the map
+        const map = new ol.Map({
+            target: 'map', // This targets the <div id="map">
+            layers: [
+                new ol.layer.Tile({ source: new ol.source.OSM() }),
+                vectorLayer
+            ],
+            // Start zoomed out for the animation
+            view: new ol.View({
+                center: ol.proj.fromLonLat([0, 0]), 
+                zoom: 2 
+            })
+        });
+
+        // 8. ANIMATION CODE
+        const view = map.getView();
+        const uscCenter = ol.proj.fromLonLat([-118.285, 34.022]);
+        
+        view.animate(
+            {
+                center: uscCenter,
+                zoom: 16,
+                rotation: 2 * Math.PI,
+                duration: 2500,
+                easing: ol.easing.easeOut
+            },
+            {
+                rotation: 0,
+                center: uscCenter,
+                duration: 1000,
+                easing: ol.easing.easeOut
+            }
+        );
+
+        console.log("Full screen map initialized with icons, labels, and fly-in animation!");
+
+        // --- END OF HOMEWORK CODE ---
+    </script>
+</body>
+</html> 

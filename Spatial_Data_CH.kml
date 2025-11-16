@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document>
+
+<Placemark>
+    <name>My Home</name>
+        <Point>
+        <coordinates>-118.29036297018881,34.02702181975841,0</coordinates>
+        </Point>
+</Placemark>
+
+<Folder>
+    <name>libraries</name>
+    <Placemark>
+    <name>Leavey Library</name>
+        <Point>
+            <coordinates>-118.28303081842726,34.02153309333901,0</coordinates>
+      _ </Point>
+    </Placemark>
+    <Placemark>
+    <name>Doheny Library</name>
+        <Point>
+            <coordinates>-118.28415037766956,34.02037610311187,0</coordinates>
+        </Point>
+    </Placemark>
+    <Placemark>
+    <name>Hoose Library</name>
+        <Point>
+            <coordinates>-118.28648403988029,34.01862473274226,0</coordinates>
+        </Point>
+    </Placemark>
+</Folder>
+
+<Folder>
+    <name>eateries</name>
+    <Placemark>
+    <name>RTCC Cafe</name>
+        <Point>
+            <coordinates>-118.28631152888664,34.020222664905454,0</coordinates>
+        </Point>
+    </Placemark>
+    <Placemark>
+    <name>EVK</name>
+        <Point>
+            <coordinates>-118.28220510101738,34.02125547141978,0</coordinates>
+        </Point>
+    </Placemark>
+    <Placemark>
+    <name>Fertitta Cafe</name>
+        <Point>
+            <coordinates>-118.282298223626,34.01893001215148,0</coordinates>
+        </Point>
+    </Placemark>
+</Folder>
+
+<Folder>
+    <name>waterworks</name>
+    <Placemark>
+    <name>Gen. Fountain</name>
+        <Point>
+        <coordinates>-118.28324727244882,34.02219592908872,0</coordinates>
+        </Point>
+    </Placemark>
+    <Placemark>
+    <name>Doheny Fountatin</name>
+        <Point>
+        <coordinates>-118.28446687377786,34.02052962767855,0</coordinates>
+        </Point>
+    </Placemark>
+  _ <Placemark>
+    <name>PNF Shumway</name>
+        <Point>
+            <coordinates>-118.28526674152653,34.020222664905454,0</coordinates>
+        </Point>
+    </Placemark>
+    <Placemark>
+    <name>Fubon Fountain</name>
+        <Point>
+            <coordinates>-118.28503409869414,34.02523104748001,0</coordinates>
+        </Point>
+    </Placemark>
+    <Placemark>
+    <name>Marshall Fountain</name>
+        <Point>
+            <coordinates>-118.2850333084606,34.019087507543276,0</coordinates>
+        </Point>
+    </Placemark>
+</Folder>
+
+<Folder>
+    <name>department buildings</name>
+    <Placemark>
+    <name>SAL</name>
+        <Point>
+            <coordinates>-118.28924344811942,34.01947731108682,0</coordinates>
+        </Point>
+    </Placemark>
+    <Placemark>
+    <name>USC Viterbi</name>
+      _ <Point>
+            <coordinates>-118.28806356068792,34.0200484306049,0</coordinates>
+        </Point>
+    </Placemark>
+    <Placemark>
+    <name>TTH</name>
+        <Point>
+            <coordinates>-118.28406684402886,34.02238227716023,0</coordinates>
+        </Point>
+    </Placemark>
+    <Placemark>
+    <name>USC Law</name>
+        <Point>
+            <coordinates>-118.28417482327542,34.01884785174663,0</coordinates>
+        </Point>
+    </Placemark>
+    <Placemark>
+    <name>USC Architecture</name>
+        <Point>
+            <coordinates>-118.28771237025748,34.01928644715761,0</coordinates>
+        </Point>
+    </Placemark>
+    <Placemark>
+    <name>Marshall</name>
+        <Point>
+            <coordinates>-118.2855286653286,34.018599348625884,0</coordinates>
+        </Point>
+    </Placemark>
+</Folder>
+
+<Placemark>
+  <name>Convex Hull</name>
+  <Style>
+    <PolyStyle>
+      <color>7f00ff00</color> <outline>1</outline>
+    </PolyStyle>
+  </Style>
+  <Polygon>
+    <outerBoundaryIs>
+      <LinearRing>
+        <coordinates>
+          -118.2855286653286,34.018599348625884 -118.28648403988029,34.01862473274226 -118.28924344811942,34.01947731108682 -118.29036297018881,34.02702181975841 -118.28503409869414,34.02523104748001 -118.28220510101738,34.02125547141978 -118.282298223626,34.01893001215148 -118.2855286653286,34.018599348625884
+        </coordinates>
+      </LinearRing>
+    </outerBoundaryIs>
+  </Polygon>
+</Placemark>
+
+
+</Document>
+</kml>
