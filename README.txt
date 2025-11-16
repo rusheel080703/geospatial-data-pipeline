@@ -1,272 +1,132 @@
-HW3 – Spatial Data Collection, Processing & Visualization
+This is the complete, copy-pasteable `README.md` file for your **HW3: Spatial Data Creation, Processing, and Visualization** project.
 
-Author: Rusheel Vijay Sable
-Course: Database Systems
-Date: 11-15-2025
+````markdown
+# 🗺️ HW3: Spatial Data Creation, Processing, and Visualization
 
-📌 Overview
+**An end-to-end project utilizing manual data collection, PostGIS spatial analysis, and AI code generation (Dyad/Google AI Studio) to process and visualize real-world geo-coordinates.**
 
-This assignment walks through the end-to-end workflow of creating, analyzing, and visualizing custom spatial data. I manually collected real-world GPS coordinates, structured them into a KML file, visualized them in multiple platforms, generated spatial queries via PostGIS, and built browser-based and LLM-generated mapping applications.
+---
 
-This README documents:
-✔ What I did
-✔ The tools I used
-✔ Screenshots included
-✔ All files included in the .zip
+## 🧠 Project Overview
 
-Everything required in the HW spec is completed.
+This assignment involved creating, processing, and visualizing a custom set of spatial data points using a variety of modern geospatial and AI tools. The project covers the full lifecycle of spatial data, from ground-level collection to complex database queries and final interactive visualization.
 
-0. 📍 Data Collection
+### Project Goals
 
-I manually collected 18 GPS coordinates:
+* **Data Acquisition:** Manually collect and structure 13 real-world geo-coordinates.
+* **Data Structuring:** Convert raw data into the **KML (Keyhole Markup Language)** format with specific hierarchical folders.
+* **Spatial Analysis:** Write and execute spatial queries using a robust database (PostGIS).
+* **Visualization:** Utilize specialized tools (Google Earth, ArcGIS, OpenLayers) and AI-generated map applications.
 
-Home Location
+---
 
-1 point — my home address (collected using real GPS on my phone)
+## 🛠 Tech Stack
 
-USC Campus Locations (17 points total)
+| Category | Tool | Purpose |
+| :--- | :--- | :--- |
+| **Data Format** | **KML** (.kml / XML) | Primary data serialization format. |
+| **Spatial Database** | **PostgreSQL + PostGIS** | Base relational database with the spatial data add-on for advanced queries. |
+| **AI Code Gen** | **Dyad IDE + Ollama (Gemma 2.0)** | Used to prompt an LLM to generate custom map application code (HTML/JS) using the **Leaflet** library. |
+| **AI Visualization** | **Google AI Studio** | Used for creating **vibe-coded apps** to display geo-coordinates and outline areas on uploaded map screenshots. |
+| **Visualization/Conversion** | Google Earth, KML Viewer, ArcGIS Online, OpenLayers | Tools used to visualize KML, Shapefiles, and browser-cached data. |
 
-Separated into 4 categories:
+---
 
-Libraries	
-Restaurants / Coffee Shops	
-Waterworks	
-Department Buildings	
+## 🗺️ Data & Spatial Analysis
 
-✔ I took a selfie at each location (all selfies included in the ZIP).
-✔ All coordinates were recorded manually from phone GPS — no Google Maps clicking.
+### 1. Data Collection Summary
+13 spatial coordinates were manually collected using a phone application (showing longitude/latitude) and compiled into a table:
+* **1 Residence Point** (home/apartment/dorm).
+* **12 Campus/Local Points** categorized into four KML folders:
+    * 3 Libraries
+    * 3 Restaurants/Coffee Places (Eateries)
+    * 3 Fountains (Waterworks)
+    * 3 Department Buildings
 
-1. 🗂 KML File Creation
+### 2. PostGIS Spatial Queries
 
-I created a fully structured KML file containing:
+Two essential spatial queries were executed using Postgres/PostGIS to derive new geometric objects from the 13 collected points:
 
-<Folder> tags for the 4 categories
+1.  **Convex Hull Computation:** Computed the smallest convex polygon enclosing all 13 points. The resulting polygon coordinates were added back into the KML file and visually verified in Google Earth.
+2.  **Nearest Neighbor Search:** Computed the **four nearest neighbors** to the residence location. The results were visualized by adding four line segments (Home to Neighbor N) to the KML file.
 
-All 13 points as <Placemark> entries
+---
 
-Coordinates in proper order: longitude, latitude
+## 💻 Setup & Execution (PostGIS via Docker)
 
-Convex hull polygon from PostGIS
+The easiest method for setting up the required spatial database environment is using Docker.
 
-4 nearest-neighbor line segments from home point
+### 1️⃣ Docker Setup
 
-File included:
-✔ Rusheel_USC_Map.kml
+Assuming Docker is installed, pull and run the official PostGIS image:
 
-2. 🌍 Google Earth Visualization
+```bash
+docker run -d --name postgis \
+-e POSTGRES_USER=postgres \
+-e POSTGRES_PASSWORD=postgres \
+-e POSTGRES_DB=gis_database \
+-p 5432:5432 postgis/postgis:16-3.4
+````
 
-Loaded the full KML file into Google Earth (web/desktop).
+The PostGIS instance is now accessible on port `5432`.
 
-Verified:
-✔ All 13 points show correctly
-✔ Folders expand/collapse
-✔ Hull polygon outlines correctly
-✔ Nearest-neighbor lines display cleanly
+### 2️⃣ Running Spatial Queries
 
-Included screenshot:
-✔ Google_Earth.png
+Queries are written in SQL, inserted into the PostGIS database, and executed via a client tool (like DataGrip or pgAdmin) to perform the Convex Hull and Nearest Neighbor calculations.
 
-3. 🔎 KML Viewer Validation
+-----
 
-Uploaded the KML to:
-http://kmlviewer.nsspot.net/
+## 🎨 Visualization & AI Integration
 
-Verified all:
-✔ Placemark names
-✔ Hull polygon
-✔ Linestrings
+The collected data was visualized across multiple platforms to fulfill the assignment requirements.
 
-Screenshot:
-✔ KML_Viewer.png
+### OpenLayers (HTML5 Local Storage)
 
-4. 🛢 PostGIS Spatial Queries
+  * Used the **OpenLayers JavaScript API** to visualize the 13 points.
+  * Data persistence was achieved by storing the coordinates in the browser's **HTML5 localStorage** and reading them back for plotting.
 
-I used PostgreSQL + PostGIS to run all spatial computations.
+### Dyad + LLM Code Generation (Leaflet)
 
-4.1 Convex Hull
+  * Utilized **Dyad IDE** and **Ollama (Gemma 2.0)** to generate the initial code for a map visualization app.
+  * The generated HTML/JS code (based on the **Leaflet map library**) was then modified to accept separate Longitude and Latitude inputs via two fields and plot a marker upon clicking an 'OK' button.
 
-Steps completed:
+### ArcGIS Online & Shapefile Conversion
 
-Inserted all 13 points into a PostGIS table
+  * The KML file was converted to an **ESRI Shapefile (.zip)** using an online converter.
+  * The resulting Shapefile was uploaded to **ArcGIS Online** for visualization.
 
-Ran:
+### Google AI Studio (Vibe-Coded Apps)
 
-SELECT ST_AsText(ST_ConvexHull(ST_Collect(geom))) FROM locations;
+  * Created two separate prompt-based applications:
+    1.  An app to display a given `[lat,long]` coordinate as a map pin on Google Maps.
+    2.  An app that allows the user to upload a map screenshot and a plaintext list of coordinates, then **outlines the coordinates in yellow** on the uploaded image.
 
+-----
 
-Converted returned polygon WKT into a KML <Polygon>
+## 📝 Deliverables (Screenshots)
 
-Added this polygon into my master KML
+The following screenshots were required as proof of work for the assignment:
 
-Loaded into Google Earth to confirm shape
+  * Google Earth snapshot (raw data)
+  * KML viewer snapshot (raw data)
+  * PostGIS Convex Hull in Google Earth
+  * PostGIS Nearest Neighbors in Google Earth
+  * OpenLayers visualization
+  * ArcGIS visualization
+  * Dyad (Leaflet) app visualization
+  * Google AI Studio: first app (map pin)
+  * Google AI Studio: second app (outlined points)
 
-Screenshot included:
-✔ Convex_Hull_GE.png
+-----
 
-4.2 Nearest Neighbors (k = 4)
+## 🧑‍💻 Author
 
-Found the 4 closest USC points to my home location:
+**Rusheel Vijay Sable**
 
-SELECT name, ST_Distance(home.geom, l.geom) AS dist
-FROM locations l
-ORDER BY home.geom <-> l.geom
-LIMIT 4;
+  * **Role:** Full Stack & AI Developer | Data Science Enthusiast
+  * **Motto:** "Delving into spatial data analysis and visualization."
 
+<!-- end list -->
 
-Created 4 <LineString> elements:
-
-Home → Neighbor 1
-
-Home → Neighbor 2
-
-Home → Neighbor 3
-
-Home → Neighbor 4
-
-Added to KML and validated in Google Earth.
-
-Screenshot included:
-✔ Nearest_Neighbors_GE.png
-
-5. 🗺 OpenLayers Web Map
-
-I built a browser-based map using OpenLayers.
-
-Completed tasks:
-✔ Stored all 13 coordinates in localStorage
-✔ Read them using JavaScript
-✔ Added markers for every point
-✔ Customized marker view + zoom
-✔ Verified all points appear correctly
-
-Files included:
-✔ OL.html
-
-Screenshot:
-✔ OpenLayers.png
-
-6. 🧭 ArcGIS Visualization
-
-Used MyGeodata Cloud to convert my KML into a shapefile.
-Uploaded shapefile into ArcGIS Online using “Add Layer From File”.
-
-Verified:
-✔ All points display
-✔ Symbolization works
-✔ Attribute table contains names
-✔ Convex hull polygon renders
-
-Screenshot:
-✔ ArcGIS.png
-
-7. 🤖 Dyad + Gemma (LLM-Generated Map App)
-
-Using Dyad + Gemma 2B via Ollama, I generated a mapping web app.
-
-Modified the returned code to match HW requirements:
-
-✔ Added two input fields — latitude + longitude
-✔ Added an OK button
-✔ When pressed → map centers + updates marker
-✔ Tested all 12 USC points individually
-
-Screenshot included:
-✔ Dyad_Map_Application.png
-
-8. 🤖 Google AI Studio – Application 1
-
-Prompted an LLM in Google AI Studio to build:
-
-A simple interactive map
-
-Accepting a (latitude, longitude)
-
-Placing a marker at that input location
-
-Using Google Maps API
-
-Screenshot included:
-✔ GoogleAI_App1.png
-
-9. 🤖 Google AI Studio – Application 2
-
-Created a second LLM app:
-
-✔ Uploaded the USC map screenshot
-✔ Provided the plaintext list of my 12 coordinates
-✔ LLM highlighted all 12 points with yellow markers/outlines
-
-Screenshot:
-✔ GoogleAI_App2.png
-
-📁 Files Included in the ZIP
-
-Everything below is inside the uploaded ZIP:
-
-KML & Data
-
-Rusheel_USC_Map.kml
-
-points.csv (if generated)
-
-Screenshots
-
-Google_Earth.png
-
-KML_Viewer.png
-
-Convex_Hull_GE.png
-
-Nearest_Neighbors_GE.png
-
-OpenLayers.png
-
-ArcGIS.png
-
-Dyad_Map_Application.png
-
-GoogleAI_App1.png
-
-GoogleAI_App2.png
-
-Code
-
-OL.html
-
-Images
-
-selfie_home.jpg
-
-selfie_library_1.jpg
-
-selfie_restaurant_2.jpg
-
-… (all 18 selfies)
-
-Documentation
-
-README.md (this file)
-
-📌 Summary
-
-This assignment covered:
-
-Real-world geospatial data collection
-
-KML file creation & editing
-
-Google Earth + KML viewer visualization
-
-PostGIS spatial analytics
-
-Convex hull generation
-
-Nearest neighbor queries
-
-Browser mapping via OpenLayers
-
-ArcGIS shapefile visualization
-
-LLM-generated mapping applications via Dyad & Google AI Studio
-
-All tasks have been completed fully, with clean output, working code, and screenshots.
+```
+```
